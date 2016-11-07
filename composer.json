@@ -1,0 +1,34 @@
+{
+    "name": "marks12/socketserverbundle",
+    "license": "proprietary",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        },
+        "classmap": [
+            "app/AppKernel.php",
+            "app/AppCache.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vladimir Tsarevnikov"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "symfony/symfony": "3.1.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "*"
+    },
+    "require-dev": {
+    },
+    "scripts": {
+    }
+}
