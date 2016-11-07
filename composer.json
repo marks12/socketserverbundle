@@ -1,7 +1,7 @@
 {
     "name": "marks12/socketserverbundle",
-    "license": "proprietary",
-    "type": "project",
+    "type": "symfony-bundle",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "": "src/"
