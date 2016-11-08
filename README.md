@@ -16,6 +16,8 @@ add to config/config.yml
 ```
 marks12_socket_server:
     classes:    ['AppBundle\Socket\ServerProduct', 'AppBundle\Socket\ServerGhost' ]
+    address:    '0.0.0.0'
+    port:       '10005'
 ```
 
 ## Creating classes
