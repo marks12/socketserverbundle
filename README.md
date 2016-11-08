@@ -13,9 +13,11 @@ Install this module via composer
 
 add to config/config.yml
 
-`marks12_socket_server:
-    classes:    ['AppBundle\Socket\ServerProduct', 'AppBundle\Socket\ServerGhost' ]`
-    
+```
+marks12_socket_server:
+    classes:    ['AppBundle\Socket\ServerProduct', 'AppBundle\Socket\ServerGhost' ]
+```
+
 ## Creating classes
 
 create class in your application
