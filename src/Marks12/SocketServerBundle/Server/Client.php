@@ -34,7 +34,7 @@ class Client
 
         $result = socket_connect($this->socket, $this->server_name, $this->server_port);
         if ($result === false) {
-            throw new \Exception("Cannot socket_connect(): reason: " . socket_strerror(socket_last_error($socket)));
+            throw new \Exception("Cannot socket_connect(): reason: " . socket_strerror(socket_last_error($this->socket)));
         }
     }
 
