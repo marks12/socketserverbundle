@@ -30,6 +30,12 @@ class Configuration implements ConfigurationInterface
                     ->prototype('scalar')
                     ->end()
                 ->end()
+                ->variableNode('address')
+                    ->defaultValue('0.0.0.0')
+                ->end()
+                ->variableNode('port')
+                    ->defaultValue('10000')
+                ->end()
             ->end()
         ;
 

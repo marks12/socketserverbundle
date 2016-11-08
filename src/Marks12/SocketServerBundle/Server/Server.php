@@ -25,8 +25,8 @@ class Server
     /** @var EntityManager */
     private $em;
 
-    private $address            = '0.0.0.0';
-    private $port               = '10000';
+    private $address;
+    private $port;
     private $sock;
     private $container;
 
@@ -44,6 +44,9 @@ class Server
         $this->container = $container;
         $this->output = $output;
         $this->em = $em;
+
+        $this->address = $this->container->getParameter('marks12_socket_server.address');
+        $this->port = $this->container->getParameter('marks12_socket_server.port');
     }
 
     public function getSocketApiHandler()
