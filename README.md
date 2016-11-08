@@ -40,7 +40,6 @@ class ServerProduct {
 
 `AppBundle\Socket\ServerProduct.php`
 
-
 ```php 
 <?php
 
