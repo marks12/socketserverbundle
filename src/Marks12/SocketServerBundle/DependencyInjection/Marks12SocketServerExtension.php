@@ -26,7 +26,7 @@ class Marks12SocketServerExtension extends Extension
 //        $loader->load('config.yml');
 //        $loader->load('services.yml');
 
-        $container->setParameter('marks12_socket_server.classes', $config['classes']);
+        $container->setParameter('marks12_socket_server.class', $config['class']);
         $container->setParameter('marks12_socket_server.address', $config['address']);
         $container->setParameter('marks12_socket_server.port', $config['port']);
     }
