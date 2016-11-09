@@ -16,7 +16,7 @@ add to config/config.yml
 
 ```
 marks12_socket_server:
-    class:    'AppBundle\Socket\ResponseFactory'
+    class:    'AppBundle\Socket\ResponseFactoryExample'
     address:    '0.0.0.0'
     port:       '10000'
 ```
@@ -31,7 +31,7 @@ create class in your application
 
 namespace AppBundle\Socket;
 
-class ServerProduct {
+class ResponseFactoryExample {
 
     function run ($data, $em, $answer_object) {
         
