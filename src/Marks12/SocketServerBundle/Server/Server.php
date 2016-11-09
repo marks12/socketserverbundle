@@ -35,7 +35,7 @@ class Server
     const ERROR_SOCKET_LISTEN   = 'Cant execute socket listen';
     const ERROR_SOCKET_ACCEPT   = 'Cant execute socket accept';
     const ERROR_SOCKET_READ     = 'Cant execute socket read';
-    const WELCOME_MESSAGE       = 'Welcome to server: Send exit for disconnect' . "\n";
+    const WELCOME_MESSAGE       = 'Welcome to server: Send exit for disconnect';
 
     const CONNECTIONS_COUNT     = 50;
 
@@ -95,7 +95,10 @@ class Server
             // check if there is a client trying to connect
             if (in_array($this->sock, $read)) {
                 // accept the client, and add him to the $clients array
-                $clients[] = $newsock = socket_accept($this->sock);
+                $newsock = socket_accept($this->sock);
+                socket_set_nonblock($newsock);
+
+                $clients[] = $newsock;
 
                 // send the client a welcome message
                 $this->sendWelcome($newsock);
@@ -139,6 +142,8 @@ class Server
 
                             if (!$pid) {
 
+                                echo "receive command $data \n";
+
                                 if ($data == 'long') {
                                     sleep(10);
                                 }
@@ -166,8 +171,10 @@ class Server
 
     public function send($client, string $message)
     {
+        $message .=  "\r\n";
+
         if ($client) {
-            socket_write($client, $message . "\r\n", strlen($message));
+            socket_write($client, $message , strlen($message));
         }
     }
 

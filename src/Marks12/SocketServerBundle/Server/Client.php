@@ -27,11 +27,13 @@ class Client
 
         $this->connect();
         $this->hello();
+
     }
 
     private function connect() {
 
         $result = socket_connect($this->socket, $this->server_name, $this->server_port);
+
         if ($result === false) {
             throw new \Exception("Cannot socket_connect(): reason: " . socket_strerror(socket_last_error($this->socket)));
         }
@@ -39,10 +41,11 @@ class Client
 
     private function hello() {
 
-        socket_write($this->socket, $this->hello_message, strlen($this->hello_message));
         while ($out = socket_read($this->socket, 2048)) {
             echo $out;
+            break;
         }
+//        socket_set_nonblock($this->socket);
     }
 
     public function send(string $request)
@@ -56,6 +59,7 @@ class Client
 
         while ($out = socket_read($this->socket, 2048)) {
             $response .= $out;
+            break;
         }
 
         return $response;
