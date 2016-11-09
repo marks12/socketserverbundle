@@ -1,2 +1,2 @@
 #marks12_socket_server:
-#    classes:    ['AppBundle\Test\ClassName1', 'AppBundle\Test\ClassName2' ]
+#    class:    'AppBundle\Test\ClassName1'

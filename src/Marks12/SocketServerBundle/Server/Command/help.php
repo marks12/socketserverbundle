@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ *
  * User: tsv
  * Date: 26.10.16
  * Time: 10:41

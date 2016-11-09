@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ *
  * User: tsv
  * Date: 25.10.16
  * Time: 16:44
@@ -51,7 +51,7 @@ class Server
 
     public function getSocketApiHandler()
     {
-        $config = $this->container->getParameter('marks12_socket_server.classes');
+        $config = $this->container->getParameter('marks12_socket_server.class');
 
         return $config;
     }
@@ -61,22 +61,20 @@ class Server
 
         $socketApi = $this->getSocketApiHandler();
 
-        foreach ($socketApi as $class) {
-            if(!class_exists($class)) {
-                throw new Exception(
-                    'Your class ' .
-                    $class .
-                    ' not found. Please set absolute class path like: AppBundle\Folder\ClassName'
-                );
-            }
+        if(!class_exists($socketApi)) {
+            throw new Exception(
+                'Your class ' .
+                $socketApi .
+                ' not found. Please set absolute class path like: AppBundle\Folder\ClassName'
+            );
+        }
 
-            if(!method_exists($class, 'run')) {
-                throw new Exception(
-                    'Your class ' .
-                    $class .
-                    ' found but not contain method run. Please define public function run($data, $em) {}'
-                );
-            }
+        if(!method_exists($socketApi, 'run')) {
+            throw new Exception(
+                'Your class ' .
+                $socketApi .
+                ' found but not contain method run. Please define public function run($data, $em) {}'
+            );
         }
 
         $this->init();
@@ -137,27 +135,26 @@ class Server
                                 continue;
                             }
 
-                            foreach ($socketApi as $class) {
+                            $pid = pcntl_fork();
 
-                                $pid = pcntl_fork();
+                            if (!$pid) {
 
-                                if (!$pid) {
-
-                                    if ($data == 'long') {
-                                        sleep(10);
-                                    }
-
-                                    if ($data == 'short') {
-                                        sleep(1);
-                                    }
-
-                                    $object = new $class();
-                                    $object->run($data, $this->em, $send_sock);
-
-                                    exit(0);
+                                if ($data == 'long') {
+                                    sleep(10);
                                 }
 
+                                if ($data == 'short') {
+                                    sleep(1);
+                                }
+
+                                $object = new $socketApi();
+                                $answer = new Answer($send_sock);
+
+                                $object->run($data, $this->em, $answer);
+
+                                exit(0);
                             }
+
                         }
                     }
                 }

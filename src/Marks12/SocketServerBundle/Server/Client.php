@@ -1,9 +1,8 @@
 <?php
 
-namespace Marks12\SocketServerBundle;
+namespace Marks12\SocketServerBundle\Server;
 
 /**
- * Created by PhpStorm.
  * User: tsv
  * Date: 08.11.16
  * Time: 15:42
@@ -50,7 +49,10 @@ class Client
     {
         $response = '';
 
-        socket_write($this->socket, $request, strlen($request));
+        $request = str_replace(PHP_EOL, '', $request);
+        $request .= PHP_EOL;
+
+        socket_write($this->socket, $request, mb_strlen($request));
 
         while ($out = socket_read($this->socket, 2048)) {
             $response .= $out;
@@ -59,9 +61,8 @@ class Client
         return $response;
     }
 
-    private function __destruct()
+    function __destruct()
     {
-        $this->send('exit');
         socket_close($this->socket);
     }
 }
