@@ -153,7 +153,7 @@ class Server
                                 }
 
                                 $object = new $socketApi();
-                                $answer = new Answer($send_sock);
+                                $answer = new Answer($send_sock, $clients);
 
                                 $object->run($data, $this->em, $answer);
 
