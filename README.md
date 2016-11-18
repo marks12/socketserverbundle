@@ -1,7 +1,8 @@
 SocketServerBundle
 ==================
 
-Module allow open new multi-user socket server on port 10000 and call your classes.
+Module allow open new multi-user socket server on port 10000 
+and call your class.
 
 # Installation
 
@@ -15,45 +16,30 @@ add to config/config.yml
 
 ```
 marks12_socket_server:
-    classes:    ['AppBundle\Socket\ServerProduct', 'AppBundle\Socket\ServerGhost' ]
+    class:    'AppBundle\Socket\ResponseFactoryExample'
     address:    '0.0.0.0'
     port:       '10000'
 ```
 
-## Creating classes
+## Creating class
 
 create class in your application
-`AppBundle\Socket\ServerProduct.php`
+`AppBundle\Socket\ResponseFactoryExample.php`
 
 ```php
 <?php
-namespace AppBundle\Socket;
-
-class ServerProduct {
-
-    function run ($data, $em, $send_sock) {
-
-        $msg = 'Hello, this is class run in ServerProduct. Data: ' . $data . PHP_EOL;
-        socket_write($send_sock, $msg, strlen($msg));
-
-    }
-}
-```
-
-`AppBundle\Socket\ServerProduct.php`
-
-
-```php 
-<?php
 
 namespace AppBundle\Socket;
 
-class ServerGhost {
+class ResponseFactoryExample {
 
-    function run ($data, $em, $send_sock) {
-
-        $msg = 'Hello, this is class run in ServerGhost. Data: ' . $data . PHP_EOL;
-        socket_write($send_sock, $msg, strlen($msg));
+    function run ($data, $em, $answer_object) {
+        
+        $msg = 'Hello, this is class run in ServerProduct. Data: ' . 
+        $data . 
+        PHP_EOL;
+        
+        $answer_object->answer($msg);
     }
 }
 ```

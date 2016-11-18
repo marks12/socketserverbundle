@@ -26,9 +26,8 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('classes')
-                    ->prototype('scalar')
-                    ->end()
+                ->variableNode('class')
+                    ->defaultValue('Marks12\SocketServerBundle\Server\ResponseFactoryExample')
                 ->end()
                 ->variableNode('address')
                     ->defaultValue('0.0.0.0')
