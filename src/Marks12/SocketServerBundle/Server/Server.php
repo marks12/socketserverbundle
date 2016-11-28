@@ -81,6 +81,9 @@ class Server
         $clients = [$this->sock];
 
         while (true) {
+
+            usleep(1000);
+
             // create a copy, so $clients doesn't get modified by socket_select()
             $read = $clients;
             $write = $clients;

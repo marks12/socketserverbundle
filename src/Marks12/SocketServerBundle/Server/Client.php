@@ -62,7 +62,7 @@ class Client
             break;
         }
 
-        return $response;
+        return trim($response);
     }
 
     function __destruct()
