@@ -120,10 +120,12 @@ class Server
                 $data = @socket_read($read_sock, 1024, PHP_NORMAL_READ);
 
                 // check if the client is disconnected
-                if ($data === false) {
+                if ($data == false) {
                     // remove client for $clients array
                     $key = array_search($read_sock, $clients);
+                    socket_close($read[$key]);
                     unset($clients[$key]);
+                    unset($read[$key]);
                     echo "client disconnected.\n";
                     // continue to the next client to read from, if any
                     continue;
@@ -135,6 +137,18 @@ class Server
                     foreach ($clients as $client_key => $send_sock) {
                         // answer who ask
                         if ($send_sock == $read_sock) {
+
+                            if ($data == 'halt') {
+
+
+                                foreach($clients as $kk=>$c) {
+                                    unset($clients[$kk]);
+                                }
+                                socket_close($this->sock);
+                                echo "socket shutted down\n";
+                                exit();
+                            }
+
                             if ($data == 'exit') {
                                 socket_close($send_sock);
                                 unset($clients[$client_key]);
@@ -143,7 +157,7 @@ class Server
 
                             $pid = pcntl_fork();
 
-                            if (!$pid) {
+                            if ($pid) {
 
                                 echo "receive command $data \n";
 
