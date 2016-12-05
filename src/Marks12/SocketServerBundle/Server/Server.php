@@ -174,6 +174,7 @@ class Server
 
                                 $object->run($data, $this->em, $answer);
 
+                                $this->em->getConnection()->close();
                                 exit(0);
                             }
 
