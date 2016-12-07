@@ -169,7 +169,7 @@ class Server
                                     sleep(1);
                                 }
 
-                                $object = new $socketApi();
+                                $object = new $socketApi($this->container);
                                 $answer = new Answer($send_sock, $clients);
 
                                 $object->run($data, $this->em, $answer);
