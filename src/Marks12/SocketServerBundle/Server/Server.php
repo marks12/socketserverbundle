@@ -158,43 +158,34 @@ class Server
                             }
 
                             $this->em->getConnection()->close();
-
                             $pid = pcntl_fork();
 
                             if ($pid == self::FORK_ERROR) {
-
                                 throw new \Exception('Cant fork process');
                                 //error
-
                             } elseif ($pid) {
                                 //parent process
                                 //сюда попадет родительский процесс
-
                                 echo "receive command $data \n";
 
                                 if ($data == 'long') {
                                     sleep(10);
                                 }
-
                                 if ($data == 'short') {
                                     sleep(1);
                                 }
 
                                 $this->em->getConnection()->connect();
-
                                 $object = new $socketApi($this->container);
                                 $answer = new Answer($send_sock, $clients);
                                 $object->run($data, $this->em, $answer);
-
                                 $this->em->getConnection()->close();
-
-                                exit(0);
+//                                posix_kill(posix_getpid(), SIGKILL);
+                                exit('finish command PID:' . posix_getpid() . ' ' . PHP_EOL);
 
                             } else {
                                 //а сюда — дочерний процесс
                                 //child process
-                                $this->em->getConnection()->connect();
-
                             }
                         }
                     }
