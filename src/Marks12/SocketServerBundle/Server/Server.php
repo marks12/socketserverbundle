@@ -39,6 +39,8 @@ class Server
 
     const CONNECTIONS_COUNT     = 50;
 
+    const FORK_ERROR            = -1;
+
     public function __construct(OutputInterface $output, EntityManager $em, $container)
     {
         $this->container = $container;
@@ -155,9 +157,18 @@ class Server
                                 continue;
                             }
 
+                            $this->em->getConnection()->close();
+
                             $pid = pcntl_fork();
 
-                            if ($pid) {
+                            if ($pid == self::FORK_ERROR) {
+
+                                throw new \Exception('Cant fork process');
+                                //error
+
+                            } elseif ($pid) {
+                                //parent process
+                                //сюда попадет родительский процесс
 
                                 echo "receive command $data \n";
 
@@ -169,15 +180,23 @@ class Server
                                     sleep(1);
                                 }
 
+                                $this->em->getConnection()->connect();
+
                                 $object = new $socketApi($this->container);
                                 $answer = new Answer($send_sock, $clients);
-
                                 $object->run($data, $this->em, $answer);
 
                                 $this->em->getConnection()->close();
-                                exit(0);
-                            }
 
+                                posix_kill($pid, 9);
+                                exit(0);
+
+                            } else {
+                                //а сюда — дочерний процесс
+                                //child process
+                                $this->em->getConnection()->connect();
+
+                            }
                         }
                     }
                 }
