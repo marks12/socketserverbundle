@@ -188,7 +188,6 @@ class Server
 
                                 $this->em->getConnection()->close();
 
-                                posix_kill($pid, 9);
                                 exit(0);
 
                             } else {
